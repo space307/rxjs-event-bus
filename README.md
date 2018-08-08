@@ -204,8 +204,6 @@ console output:
 
 Клонируй и запускай тесты
 ```sh
-$ git clone git@github.com:meff34/rxjs-event-bus.git
-$ cd rxjs-event-bus
 $ npm i
 $ npm t
 ```
