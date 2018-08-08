@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    "syntax-class-properties",
+    "transform-flow-strip-types"
+  ],
+  "presets": [
+    "flow",
+    "latest",
+    "stage-0"
+  ]
+}
