@@ -12,7 +12,7 @@ type Event = {
 
 type BusHistorySettings = Map<EventType, number>
 
-export class Bus {
+export default class Bus {
   _subjectsEmitter: Subject
   _streams: Map<EventType, Subject> = new Map()
   _historySettings: BusHistorySettings

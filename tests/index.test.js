@@ -1,6 +1,5 @@
-import { Bus } from '../src/index'
+import Bus from '../src/index'
 import { merge } from 'rxjs'
-import { skip } from 'rxjs/operators';
 
 const getInstance = settings => new Bus(settings)
 
