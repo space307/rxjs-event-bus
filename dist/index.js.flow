@@ -61,7 +61,6 @@ export default class Bus<INC: { [string]: * }> {
       // $FlowIgnore i don't know
       return this._selectStream(evtType)
         .pipe(skip(eventsToSkip))
-        // $FlowIgnore
         .asObservable()
     }
 
