@@ -11,7 +11,7 @@ import type {
   StreamType,
 } from './types.js'
 
-export const NEW_STREAM_EVENT_NAME = 'bus/new-stream';
+export const NEW_BUS_STREAM_CREATED = 'event-bus/new-stream';
 
 export default class Bus<INC: { [string]: * }> {
   _subjectsEmitter: ReplaySubject<*>
@@ -95,9 +95,9 @@ export default class Bus<INC: { [string]: * }> {
     // $FlowIgnore i don't know
     this._streams.set(type, stream)
     this._updateMainStream(type)
-    if(type !== NEW_STREAM_EVENT_NAME) {
+    if(type !== NEW_BUS_STREAM_CREATED) {
       this.emit({
-        type: NEW_STREAM_EVENT_NAME,
+        type: NEW_BUS_STREAM_CREATED,
         payload: type,
       })
     }

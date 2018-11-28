@@ -1,4 +1,4 @@
-import Bus from '../src/index'
+import Bus, {NEW_BUS_STREAM_CREATED} from '../src/index'
 import { merge } from 'rxjs'
 
 const getInstance = settings => new Bus(settings)
@@ -97,7 +97,7 @@ test('receives data from several streams throuth \'getMainStream()\'', () => {
   bus.emit({type: 'event:type_1', payload: 1})
   bus.emit({type: 'event:type_2', payload: 1})
 
-  expect(subscriber).toHaveBeenCalledTimes(2)
+  expect(subscriber).toHaveBeenCalledTimes(4)
 })
 
 test('receives data from several streams throuth \'getMainStream()\' after creation of new stream', () => {
@@ -115,8 +115,8 @@ test('receives data from several streams throuth \'getMainStream()\' after creat
 
   bus.emit({type: 'event:type_2', payload: 1})
 
-  expect(firstSubscriber).toHaveBeenCalledTimes(2);
-  expect(secondSubscriber).toHaveBeenCalledTimes(1);
+  expect(firstSubscriber).toHaveBeenCalledTimes(4);
+  expect(secondSubscriber).toHaveBeenCalledTimes(2);
 })
 
 test('historySettings setup streams', () => {
@@ -125,7 +125,7 @@ test('historySettings setup streams', () => {
     ['event:type_1', 1000]
   ]))
 
-  expect(bus._streams.size).toBe(2)
+  expect(bus._streams.size).toBe(3)
 })
 
 test('with historySettings receives data from past on subscribe to \'getMainStream()\'', () => {
@@ -216,4 +216,49 @@ test('slicing of all history of ReplayStream throught \'select(...)\'', () => {
     .subscribe(subscriber)
 
   expect(subscriber).not.toBeCalled()
+})
+
+test('expect emit event when new stream created', () => {
+  const subscriber = jest.fn()
+
+  const bus = getInstance(new Map([
+    // [NEW_BUS_STREAM_CREATED, 100],
+    // ['myEvent', 1]
+  ]))
+
+  bus
+    .select(NEW_BUS_STREAM_CREATED)
+    .subscribe(subscriber);
+
+  bus.emit({type: 'myEvent', payload: 1})
+
+  expect(subscriber).toHaveBeenCalledTimes(1)
+
+  expect(subscriber).toHaveBeenCalledWith({
+    type: NEW_BUS_STREAM_CREATED,
+    payload: 'myEvent',
+  })
+})
+
+test('expect emit event when new stream created before', () => {
+  const subscriber = jest.fn()
+
+  const bus = getInstance(new Map([
+    // NOTE! History order is important! This streams will be created immediately
+    [NEW_BUS_STREAM_CREATED, 100],
+    ['myEvent', 1]
+  ]))
+
+  bus.emit({type: 'myEvent', payload: 1})
+
+  bus
+    .select(NEW_BUS_STREAM_CREATED)
+    .subscribe(subscriber);
+
+  expect(subscriber).toHaveBeenCalledTimes(1)
+
+  expect(subscriber).toHaveBeenCalledWith({
+    type: NEW_BUS_STREAM_CREATED,
+    payload: 'myEvent',
+  })
 })
