@@ -13,7 +13,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "babel src -d dist -s --source-maps inline",
+    "build": "npx babel src -d dist -s --source-maps inline",
     "test-watch": "jest --watch",
     "test": "jest",
     "prepack": "npm run prepack:babel && npm run prepack:flow && npm run test",
