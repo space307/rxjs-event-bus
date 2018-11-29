@@ -200,6 +200,28 @@ console output:
 
 ```
 
+### А если я хочу узнать, когда создается новый поток? Чтобы, к примеру, запросить что-нибудь нужное с сервера
+Нужно слушать события из специального потока: 
+
+```javascript
+import Bus, { NEW_BUS_STREAM_CREATED } from 'rxjs-event-bus'
+
+const bus = new Bus()
+
+bus
+  .select(NEW_BUS_STREAM_CREATED)
+  .subscribe(log)
+ 
+bus.emit({ type: 'my-super-cool-event'})
+  
+/*
+console output:
+
+1. type: event-bus/new-stream, payload: my-super-cool-event
+*/
+
+```
+
 ## Окей, а что мне делать, если я хочу поиграться с этим своими руками?
 
 Клонируй и запускай тесты
