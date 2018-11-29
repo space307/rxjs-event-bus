@@ -1,6 +1,6 @@
 {
   "name": "rxjs-event-bus",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Events bus based on rxjs subjects",
   "main": "dist/index.js",
   "author": "~/.space307",
