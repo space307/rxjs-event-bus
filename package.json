@@ -13,12 +13,12 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "npx babel src -d dist -s --source-maps inline",
+    "build": "babel src -d dist -s --source-maps inline",
     "test-watch": "jest --watch",
-    "test": "npx jest",
+    "test": "jest",
     "prepack": "npm run prepack:babel && npm run prepack:flow && npm run test",
     "prepack:babel": "npm run build",
-    "prepack:flow": "npx flow-copy-source src dist"
+    "prepack:flow": "flow-copy-source src dist"
   },
   "keywords": [
     "event bus",
