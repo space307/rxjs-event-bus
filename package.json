@@ -16,9 +16,9 @@
     "build": "echo 'babel src -d dist -s --source-maps inline'",
     "test-watch": "jest --watch",
     "test": "jest",
-    "_prepack": "npm run prepack:babel && npm run prepack:flow && npm run test",
-    "prepack:babel": "babel src -d dist -s --source-maps inline",
-    "prepack:flow": "flow-copy-source src dist"
+    "prepublishOnly": "npm run prepack:babel && npm run prepack:flow && npm run test",
+    "prepublis:babel": "babel src -d dist -s --source-maps inline",
+    "prepublis:flow": "flow-copy-source src dist"
   },
   "keywords": [
     "event bus",
